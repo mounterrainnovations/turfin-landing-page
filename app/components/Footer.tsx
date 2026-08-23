@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const FOOTER_LINKS = [
   { label: "Privacy",  href: "/privacy"                  },
-  { label: "Terms",    href: "/terms"                    },
+  { label: "Terms",    href: "/termsandconditions"       },
   { label: "Twitter",  href: "https://twitter.com",   external: true },
   { label: "Instagram",href: "https://instagram.com", external: true },
   { label: "Discord",  href: "https://discord.com",   external: true },
