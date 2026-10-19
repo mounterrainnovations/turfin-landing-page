@@ -112,21 +112,26 @@ export default function WaitlistForm() {
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="w-full flex flex-col md:flex-row items-center gap-3">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full flex flex-col md:flex-row items-stretch gap-2.5 md:gap-0 md:p-1.5 md:rounded-full md:bg-night/70 md:border md:border-chalk/15 md:focus-within:border-lime/60 transition-colors duration-300"
+      >
         <div className="w-full flex-1 relative">
           <input
             type="email"
             value={email}
             onChange={(e) => { setEmail(e.target.value); if (inlineMsg?.type === "error") setInlineMsg(null); }}
             placeholder="Your mail address"
+            aria-label="Email address"
+            autoComplete="email"
             required
-            className="w-full h-[52px] rounded-full bg-white/5 backdrop-blur-md border border-white/15 px-6 text-white text-sm placeholder:text-white/30 outline-none focus:border-[#CCFF00]/50 focus:ring-1 focus:ring-[#CCFF00]/25 transition-all duration-300"
+            className="w-full h-[54px] md:h-12 rounded-full bg-night/70 md:bg-transparent border border-chalk/15 md:border-0 px-6 text-chalk text-[15px] placeholder:text-moss/70 outline-none focus:border-lime/60 focus-visible:outline-none transition-colors duration-300"
           />
         </div>
         <button
           type="submit"
           disabled={status === "loading"}
-          className="w-full md:w-auto h-[52px] px-8 rounded-full bg-[#CCFF00]/90 backdrop-blur-md text-black font-semibold text-sm tracking-wide hover:bg-[#d4ff33] active:scale-95 transition-all duration-200 whitespace-nowrap disabled:opacity-70 cursor-pointer shadow-[0_0_20px_rgba(204,255,0,0.2)] hover:shadow-[0_0_30px_rgba(204,255,0,0.4)]"
+          className="w-full md:w-auto h-[54px] md:h-12 px-8 rounded-full bg-lime text-night font-semibold text-sm hover:bg-chalk active:scale-[0.97] transition-[background-color,transform] duration-300 whitespace-nowrap disabled:opacity-70 cursor-pointer"
         >
           {status === "loading" ? (
             <span className="flex items-center gap-2">
@@ -161,9 +166,10 @@ export default function WaitlistForm() {
       {/* Inline notification */}
       {inlineMsg && (
         <div
-          className={`w-full mt-3 flex items-center gap-3 px-4 py-3 rounded-2xl border animate-fade-up ${
+          role="status"
+          className={`w-full mt-3 flex items-center gap-3 px-4 py-3 rounded-2xl border text-left animate-fade-up ${
             inlineMsg.type === "success"
-              ? "bg-[#CCFF00]/10 border-[#CCFF00]/30 text-[#CCFF00]"
+              ? "bg-lime/10 border-lime/30 text-lime"
               : "bg-red-500/10 border-red-500/30 text-red-400"
           }`}
         >
@@ -176,6 +182,7 @@ export default function WaitlistForm() {
           <button
             type="button"
             onClick={() => setInlineMsg(null)}
+            aria-label="Dismiss message"
             className="flex-shrink-0 p-1 rounded-full hover:bg-white/10 transition-colors opacity-50 hover:opacity-100"
           >
             <X size={14} weight="bold" />
@@ -185,23 +192,24 @@ export default function WaitlistForm() {
 
       {/* Full-Screen Turnstile Overlay */}
       {showTurnstile && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/70 backdrop-blur-sm animate-fade-in">
-          <div className="relative flex flex-col items-center gap-6 p-8 rounded-3xl border border-white/10 bg-black/60 backdrop-blur-2xl shadow-2xl max-w-sm w-full mx-4">
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-night/80 backdrop-blur-md animate-fade-in" data-lenis-prevent>
+          <div role="dialog" aria-modal="true" aria-labelledby="turnstile-title" className="relative flex flex-col items-center gap-6 p-8 rounded-[28px] border border-chalk/12 bg-pitch shadow-2xl max-w-sm w-full mx-4">
             {/* Close button */}
             <button
               onClick={handleTurnstileClose}
-              className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-white/10 transition-colors text-white/40 hover:text-white"
+              aria-label="Close security check"
+              className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-chalk/10 transition-colors text-moss hover:text-chalk"
             >
               <X size={18} weight="bold" />
             </button>
 
             {/* Title */}
             <div className="flex flex-col items-center gap-2 pt-2">
-              <span className="w-3 h-3 rounded-full bg-[#CCFF00] animate-pulse" />
-              <h3 className="text-white text-lg font-bold tracking-tight">
+              <span className="w-2.5 h-2.5 rounded-full bg-lime live-dot" />
+              <h3 id="turnstile-title" className="text-chalk text-lg font-bold tracking-tight">
                 Security Check
               </h3>
-              <p className="text-white/40 text-xs text-center">
+              <p className="text-moss text-xs text-center">
                 Please verify you&apos;re human to continue
               </p>
             </div>

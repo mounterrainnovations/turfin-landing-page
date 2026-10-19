@@ -15,74 +15,58 @@ export default function ProgressSteps({ currentPhase }: ProgressStepsProps) {
   ];
 
   return (
-    <div className="w-full py-2 xs:py-4 md:py-8 flex flex-col items-center">
-      <div className="relative w-full max-w-2xl px-6 md:px-10">
-        {/* Progress Bar Background */}
-        <div className="absolute top-5 md:top-7 left-[12.5%] right-[12.5%] h-0.5 bg-white/5 z-0" />
+    <ol className="relative w-full grid grid-cols-4" aria-label="Launch progress">
+      {/* Chalk track behind the nodes */}
+      <span className="absolute top-5 md:top-6 left-[12.5%] right-[12.5%] h-px bg-chalk/15" aria-hidden />
 
-        {/* Filled Progress Bar */}
-        <div
-          className="absolute top-5 md:top-7 left-[12.5%] h-0.5 bg-[#CCFF00] z-0 transition-all duration-700 ease-in-out shadow-[0_0_10px_#CCFF00]"
-          style={{ width: `calc(${((currentPhase - 1) / (steps.length - 1)) * 75}%)` }}
-        />
+      {/* Filled track */}
+      <span
+        className="absolute top-5 md:top-6 left-[12.5%] h-px bg-lime transition-all duration-700 ease-out-expo"
+        style={{ width: `calc(${((currentPhase - 1) / (steps.length - 1)) * 75}%)` }}
+        aria-hidden
+      />
 
-        {/* Steps */}
-        <div className="relative z-10 flex justify-between">
-          {steps.map((step, index) => {
-            const stepNum = index + 1;
-            const isCompleted = stepNum < currentPhase;
-            const isActive = stepNum === currentPhase;
-            const isLast = stepNum === steps.length;
-            const Icon = step.icon;
+      {steps.map((step, index) => {
+        const stepNum = index + 1;
+        const isCompleted = stepNum < currentPhase;
+        const isActive = stepNum === currentPhase;
+        const Icon = step.icon;
 
-            return (
-              <div key={step.label} className="flex flex-col items-center flex-1">
-                {/* Circle Wrapper */}
-                <div 
-                  className={`
-                    w-10 h-10 md:w-14 md:h-14 rounded-full flex items-center justify-center transition-all duration-500
-                    ${isCompleted 
-                      ? "bg-[#CCFF00] text-black shadow-[0_0_20px_rgba(204,255,0,0.4)]" 
-                      : isActive 
-                      ? "bg-[#CCFF00] text-black shadow-[0_0_15px_rgba(204,255,0,0.4)]" 
-                      : "bg-[#0a0a0a] border border-white/10 text-white/20"
-                    }
-                    ${isActive && !isLast ? "animate-pulse" : ""}
-                    ${isActive && isLast ? "animate-glow-breathe-subtle" : ""}
-                    relative
-                  `}
-                >
-                  {isCompleted ? (
-                    <Check weight="bold" size={24} className="md:size-7" />
-                  ) : (
-                    <Icon weight={isActive ? "fill" : "bold"} size={22} className="md:size-6" />
-                  )}
-                  
-                  {/* Glow for Last Active Step */}
-                  {isActive && isLast && (
-                    <div className="absolute inset-0 rounded-full bg-[#CCFF00]/40 blur-2xl animate-glow-breathe -z-10 scale-150" />
-                  )}
-                </div>
+        return (
+          <li
+            key={step.label}
+            className="relative z-10 flex flex-col items-center"
+            aria-current={isActive ? "step" : undefined}
+          >
+            <div
+              className={`w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-colors duration-500 ${
+                isCompleted
+                  ? "bg-lime text-night"
+                  : isActive
+                  ? "bg-lime text-night live-dot"
+                  : "bg-pitch border border-chalk/15 text-chalk/35"
+              }`}
+            >
+              {isCompleted ? (
+                <Check weight="bold" size={18} />
+              ) : (
+                <Icon weight={isActive ? "fill" : "regular"} size={18} />
+              )}
+            </div>
 
-                {/* Labels */}
-                <div className="mt-2 xs:mt-4 flex flex-col items-center gap-0.5 xs:gap-1">
-                  <span className={`text-[9px] xs:text-[10px] md:text-xs font-bold tracking-wide xs:tracking-widest uppercase transition-colors duration-500 text-center
-                    ${isActive || isCompleted ? "text-[#CCFF00]" : "text-white/20"}
-                  `}>
-                    {step.label}
-                  </span>
-                  <span className={`text-[7px] xs:text-[8px] md:text-[9px] tracking-wide xs:tracking-widest uppercase font-medium transition-colors duration-500
-                    ${isActive || isCompleted ? "text-white/40" : "text-white/10"}
-                  `}>
-                    {step.sub}
-                  </span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-    </div>
+            <span
+              className={`mt-3 text-[11px] xs:text-xs md:text-sm font-semibold text-center leading-tight ${
+                isActive || isCompleted ? "text-chalk" : "text-chalk/40"
+              }`}
+            >
+              {step.label}
+            </span>
+            <span className={`mt-0.5 font-wide text-[9px] xs:text-[10px] md:text-[11px] ${isActive || isCompleted ? "text-lime/80" : "text-moss/50"}`}>
+              {step.sub}
+            </span>
+          </li>
+        );
+      })}
+    </ol>
   );
 }

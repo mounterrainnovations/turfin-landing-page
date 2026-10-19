@@ -1,22 +1,15 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono, Barlow } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Archivo } from "next/font/google";
 import "./globals.css";
 import LenisProvider from "./components/LenisProvider";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// One variable family, used across its width axis:
+// 62% (extra-condensed) for stadium-style display type, 100% for body, 125% for small labels.
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const barlow = Barlow({
-  variable: "--font-barlow",
-  subsets: ["latin"],
-  weight: ["400", "600", "700", "800", "900"],
+  axes: ["wdth"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -25,6 +18,14 @@ export const metadata: Metadata = {
   icons: {
     icon: "/turfinLogo.svg",
   },
+  // Safari shows its "Open in App Store" banner for the player app
+  other: {
+    "apple-itunes-app": "app-id=6785032253",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#050E08",
 };
 
 export default function RootLayout({
@@ -34,9 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${barlow.variable} antialiased`}
-      >
+      <body className={`${archivo.variable} antialiased`}>
         <LenisProvider>{children}</LenisProvider>
       </body>
     </html>
