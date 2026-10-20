@@ -1,17 +1,6 @@
-export const STORE_LINKS = {
-  // TurfIn — the player app
-  player: {
-    ios: "https://apps.apple.com/in/app/turfin/id6785032253",
-    android: "https://play.google.com/store/apps/details?id=in.mounterra.turfin&hl=en_IN",
-  },
-  // TurfIn Ops — the venue / vendor app
-  vendor: {
-    ios: "https://apps.apple.com/in/app/turfin-ops/id6781202778",
-    android: "https://play.google.com/store/apps/details?id=com.reorbitals.turfinapp.vendor&hl=en_IN",
-  },
-} as const;
+import { STORE_LINKS, type AppKey as App } from "../lib/storeLinks";
 
-type App = keyof typeof STORE_LINKS;
+export { STORE_LINKS };
 
 const badge =
   "group inline-flex items-center gap-2.5 h-[52px] pl-3.5 pr-5 rounded-[12px] bg-black text-white border border-white/30 transition-[border-color,transform] duration-300 hover:border-white active:scale-[0.98]";
