@@ -15,6 +15,11 @@ export const STORE_LINKS = {
 
 export type AppKey = keyof typeof STORE_LINKS;
 
+// App Store Connect provider token for campaign links (public — it appears in every campaign URL).
+// App Store Connect → Apps → App Analytics → Acquisition → Campaigns → Generate Campaign Link → the `pt=` value.
+// Until set, iOS redirects go out untagged; Google Play attribution works without it.
+export const APPLE_PROVIDER_TOKEN: string | null = null;
+
 // Public QR paths (/apps/<slug>) → app. Printed on business cards — do not rename.
 export const APP_SLUGS = {
   user: "player",
