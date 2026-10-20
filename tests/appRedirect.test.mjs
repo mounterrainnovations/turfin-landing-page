@@ -1,7 +1,14 @@
 // Run: npm test  (node:test + Node's built-in TypeScript stripping, no extra deps)
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { detectPlatform, isStoreUrl, storeRedirectTarget } from "../app/lib/appRedirect.ts";
+import {
+  detectPlatform,
+  isBot,
+  isStoreUrl,
+  sanitizeSource,
+  storeRedirectTarget,
+  withCampaign,
+} from "../app/lib/appRedirect.ts";
 import { APP_SLUGS, STORE_LINKS } from "../app/lib/storeLinks.ts";
 
 const UA = {
@@ -25,6 +32,7 @@ const UA = {
   linux: "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0",
   googlebotMobile:
     "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+  whatsappPreview: "WhatsApp/2.24.21.80 A",
   curl: "curl/8.7.1",
 };
 
@@ -59,8 +67,11 @@ test("missing, unknown, malformed UA → fallback", () => {
   }
 });
 
-test("crawlers → fallback even with a mobile UA", () => {
+test("crawlers and link previewers → fallback even with a mobile UA", () => {
   assert.equal(detectPlatform(UA.googlebotMobile), null);
+  assert.equal(detectPlatform(UA.whatsappPreview), null);
+  assert.ok(isBot(UA.googlebotMobile) && isBot(UA.whatsappPreview));
+  assert.ok(!isBot(UA.iphone) && !isBot(UA.android) && !isBot(null));
 });
 
 test("missing or invalid store config → fallback, never a placeholder redirect", () => {
@@ -85,4 +96,36 @@ test("configured production links are valid HTTPS official-store URLs", () => {
 test("every QR slug maps to a configured app", () => {
   assert.deepEqual(Object.keys(APP_SLUGS).sort(), ["user", "vendor"]);
   for (const app of Object.values(APP_SLUGS)) assert.ok(STORE_LINKS[app]);
+});
+
+test("src tag: short slugs only, lowercased", () => {
+  assert.equal(sanitizeSource("card"), "card");
+  assert.equal(sanitizeSource("Card_2026"), "card_2026");
+  for (const bad of [null, undefined, "", "a b", "x".repeat(25), "https://evil.example", "card&ct=x"]) {
+    assert.equal(sanitizeSource(bad), null, String(bad));
+  }
+});
+
+test("Google Play campaign → referrer UTM, same listing", () => {
+  const url = new URL(withCampaign(links.android, "android", { campaign: "qr_card" }));
+  assert.equal(url.hostname, "play.google.com");
+  assert.equal(url.searchParams.get("id"), "in.mounterra.turfin");
+  assert.equal(url.searchParams.get("referrer"), "utm_source=turfinapp&utm_medium=qr&utm_campaign=qr_card");
+});
+
+test("App Store campaign → pt/ct only when a provider token is set", () => {
+  assert.equal(withCampaign(links.ios, "ios", { campaign: "qr_card" }), links.ios);
+  const url = new URL(withCampaign(links.ios, "ios", { campaign: "qr_card", appleProviderToken: "123456" }));
+  assert.equal(url.origin + url.pathname, links.ios);
+  assert.equal(url.searchParams.get("pt"), "123456");
+  assert.equal(url.searchParams.get("ct"), "qr_card");
+  assert.equal(url.searchParams.get("mt"), "8");
+});
+
+test("tagged redirect still lands on the official store", () => {
+  const campaign = { campaign: "qr_card", appleProviderToken: "123456" };
+  assert.ok(storeRedirectTarget(UA.iphone, links, campaign).startsWith(links.ios + "?"));
+  assert.ok(storeRedirectTarget(UA.android, links, campaign).startsWith(links.android + "&"));
+  assert.equal(storeRedirectTarget(UA.macChrome, links, campaign), null);
+  assert.equal(storeRedirectTarget(UA.iphone, { ios: "https://evil.example/x" }, campaign), null);
 });
