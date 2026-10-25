@@ -12,9 +12,7 @@ const APP_LINKS = [
 const FOOTER_LINKS = [
   { label: "Privacy",  href: "/privacy"                  },
   { label: "Terms",    href: "/termsandconditions"       },
-  { label: "Twitter",  href: "https://twitter.com",   external: true },
-  { label: "Instagram",href: "https://instagram.com", external: true },
-  { label: "Discord",  href: "https://discord.com",   external: true },
+  { label: "Instagram",href: "https://www.instagram.com/turfinapp?xtok=ZTUyOGFmMnoyaTFz", external: true },
 ];
 
 export default function Footer() {
