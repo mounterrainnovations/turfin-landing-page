@@ -14,12 +14,12 @@ export default function PrivacyPolicy() {
     {
       title: "2. How We Use Your Information",
       content:
-        "Your email is primarily used to notify you about progress, early access opportunities, and the official launch of TurfInApp. We also use aggregated usage data to optimize website performance and understand user interests within the sports technology space.",
+        "Your email is primarily used to notify you about progress, early access opportunities, and the official launch of Turfin App. We also use aggregated usage data to optimize website performance and understand user interests within the sports technology space.",
     },
     {
       title: "3. Data Sharing and Protection",
       content:
-        "TurfInApp, operated by RE Orbit Innovations Pvt Ltd, does not sell, trade, or rent your personal information to third parties. We use industry-standard security measures, including encryption and secure servers, to protect your data from unauthorized access. We only share information with trusted service providers who assist in our operations (e.g., email delivery services).",
+        "Turfin App, operated by RE Orbit Innovations Pvt Ltd, does not sell, trade, or rent your personal information to third parties. We use industry-standard security measures, including encryption and secure servers, to protect your data from unauthorized access. We only share information with trusted service providers who assist in our operations (e.g., email delivery services).",
     },
     {
       title: "4. Your Privacy Rights",
@@ -34,7 +34,7 @@ export default function PrivacyPolicy() {
     {
       title: "6. Changes to This Policy",
       content:
-        "We may update our Privacy Policy as TurfInApp evolves. Any significant changes will be reflected on this page with an updated 'Last Updated' date. We encourage you to review this policy periodically.",
+        "We may update our Privacy Policy as Turfin App evolves. Any significant changes will be reflected on this page with an updated 'Last Updated' date. We encourage you to review this policy periodically.",
     },
   ];
 

@@ -13,10 +13,10 @@ const archivo = Archivo({
 });
 
 export const metadata: Metadata = {
-  title: "TurfInApp",
-  description: "TurfInApp - Your Premium turf Experience",
+  title: "Turfin App",
+  description: "Turfin App - Your Premium turf Experience",
   icons: {
-    icon: "/turfinLogo.svg",
+    icon: "/turfinIcon.png",
   },
   // Safari shows its "Open in App Store" banner for the player app
   other: {

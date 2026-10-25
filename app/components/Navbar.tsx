@@ -48,16 +48,16 @@ export default function Navbar() {
     >
       <div className="flex items-center justify-between gap-4 px-5 md:px-10 h-16 md:h-[72px]">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group flex-none" aria-label="TurfInApp home">
+        <Link href="/" className="flex items-center gap-2.5 group flex-none" aria-label="Turfin App home">
           <Image
-            src="/turfinLogo.svg"
+            src="/turfinLogo.png"
             alt=""
-            width={26}
-            height={26}
-            className="object-contain transition-transform duration-500 ease-out-expo group-hover:rotate-[20deg]"
+            width={56}
+            height={30}
+            className="object-contain h-[30px] w-auto transition-transform duration-500 ease-out-expo group-hover:scale-105"
           />
           <span className="text-chalk font-extrabold tracking-tight text-lg leading-none">
-            TurfIn<span className="text-lime">App.</span>
+            Turfin <span className="text-lime">App</span>
           </span>
         </Link>
 

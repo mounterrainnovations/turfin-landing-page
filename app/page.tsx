@@ -175,7 +175,7 @@ const STEPS = [
         </div>
         <div className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-night/50 border border-chalk/8">
           <span className="text-moss text-[13px]">TurfCoins earned</span>
-          <span className="text-lime text-[13px] font-bold">+60 TC</span>
+          <span className="text-lime text-[13px] font-bold">+10 TC</span>
         </div>
       </div>
     ),
@@ -637,11 +637,9 @@ export default function Home() {
 
             <div className="mt-auto pt-10 flex flex-col gap-2">
               {[
-                { label: "Booking · 2 hrs", coins: "+120 TC", date: "Today"     },
-                { label: "Booking · 1 hr",  coins: "+60 TC",  date: "Yesterday" },
-                { label: "Referral bonus",  coins: "+500 TC", date: "Mar 18"    },
+                { label: "Booking successful", coins: "+10 TC", date: "Today" },
               ].map(({ label, coins, date }) => (
-                <div key={label} className="flex items-center justify-between bg-night/[0.07] border border-night/10 rounded-2xl px-4 py-3.5">
+                <div key={date} className="flex items-center justify-between bg-night/[0.07] border border-night/10 rounded-2xl px-4 py-3.5">
                   <div>
                     <p className="text-night text-sm font-semibold">{label}</p>
                     <p className="text-night/55 text-xs mt-0.5">{date}</p>

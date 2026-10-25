@@ -25,10 +25,10 @@ export default async function GetAppPage({ params }: Props) {
 
   return (
     <main className="min-h-dvh flex flex-col items-center justify-center px-4 py-16 text-center bg-night">
-      <Link href="/" className="flex items-center gap-2.5 mb-10" aria-label="TurfInApp home">
-        <Image src="/turfinLogo.svg" alt="" width={40} height={40} className="object-contain" priority />
+      <Link href="/" className="flex items-center gap-2.5 mb-10" aria-label="Turfin App home">
+        <Image src="/turfinLogo.png" alt="" width={82} height={44} className="object-contain h-11 w-auto" priority />
         <span className="text-chalk font-extrabold tracking-tight text-2xl leading-none">
-          TurfIn<span className="text-lime">App.</span>
+          Turfin <span className="text-lime">App</span>
         </span>
       </Link>
 

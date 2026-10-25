@@ -24,10 +24,10 @@ export default function Footer() {
     <footer className="w-full pt-14 pb-10 border-t border-chalk/10">
       {/* Top row: logo left, links right — stacks on mobile */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-12">
-        <Link href="/" className="flex items-center gap-2.5 flex-none" aria-label="TurfInApp home">
-          <Image src="/turfinLogo.svg" alt="" width={32} height={32} className="object-contain" />
+        <Link href="/" className="flex items-center gap-2.5 flex-none" aria-label="Turfin App home">
+          <Image src="/turfinLogo.png" alt="" width={60} height={32} className="object-contain h-8 w-auto" />
           <span className="text-chalk font-extrabold tracking-tight text-xl leading-none">
-            TurfIn<span className="text-lime">App.</span>
+            Turfin <span className="text-lime">App</span>
           </span>
         </Link>
 
